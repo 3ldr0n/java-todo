@@ -1,3 +1,5 @@
+package com.todo.app;
+
 import java.io.*;
 
 class Todo {
@@ -18,6 +20,12 @@ class Todo {
                 System.out.println(fileData.read());
             } catch (IOException e) {
                 System.out.println("Error reading the file.");
+            } finally {
+                try {
+                    fileData.close();
+                } catch (IOException e) {
+                    System.out.println("Error closing the file.");
+                }
             }
             // fileData.close();
         } catch (FileNotFoundException e) {
@@ -26,7 +34,7 @@ class Todo {
     }
 }
 
-public class Main{
+public class App {
     public static void main(String[] args) {
         System.out.println(args.length);
         if (args.length == 1) {
