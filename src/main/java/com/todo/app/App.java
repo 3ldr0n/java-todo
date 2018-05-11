@@ -1,7 +1,7 @@
 package com.todo.app;
 
-import java.io.File;
 import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
 
@@ -15,12 +15,17 @@ class Todo {
 
     public void getTodos() {
         try {
-            System.out.println("Data");
-            File todosFile = new File(this.filename);
-            //BufferedReader fileData = new BufferedReader(new FileReader(todosFile));
-            FileReader fileData = new FileReader(todosFile);
+            FileReader fileData = new FileReader(this.filename);
+            BufferedReader bufferRead = new BufferedReader(fileData);
+
+            String currentLine;
+
             try {
-                System.out.println(fileData.read());
+                // Reads the file until it ends.
+                System.out.println(this.filename + " todos:");
+                while ((currentLine = bufferRead.readLine()) != null) {
+                    System.out.println(currentLine);
+                }
             } catch (IOException e) {
                 System.out.println("Error reading the file.");
             } finally {
@@ -30,16 +35,18 @@ class Todo {
                     System.out.println("Error closing the file.");
                 }
             }
-            // fileData.close();
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
+    }
+
+    public void addTodo() {
+        System.out.println("Adding todos... ");
     }
 }
 
 public class App {
     public static void main(String[] args) {
-        System.out.println(args.length);
         if (args.length == 1) {
             System.out.println("Return all the todos.");
         } else if (args.length >= 2) {
