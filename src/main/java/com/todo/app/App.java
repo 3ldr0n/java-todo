@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 class Todo {
     private Integer numberOfTodos;
@@ -13,10 +14,15 @@ class Todo {
         this.filename = username;
     }
 
-    public void getTodos() {
+    private boolean fileExists() {
+        return true;
+    }
+
+    public ArrayList<String> getTodos() {
+        ArrayList<String> fileData = new ArrayList<String>();
         try {
-            FileReader fileData = new FileReader(this.filename);
-            BufferedReader bufferRead = new BufferedReader(fileData);
+            FileReader file = new FileReader(this.filename);
+            BufferedReader bufferRead = new BufferedReader(file);
 
             String currentLine;
 
@@ -24,13 +30,14 @@ class Todo {
                 // Reads the file until it ends.
                 System.out.println(this.filename + " todos:");
                 while ((currentLine = bufferRead.readLine()) != null) {
+                    fileData.add(currentLine);
                     System.out.println(currentLine);
                 }
             } catch (IOException e) {
                 System.out.println("Error reading the file.");
             } finally {
                 try {
-                    fileData.close();
+                    file.close();
                 } catch (IOException e) {
                     System.out.println("Error closing the file.");
                 }
@@ -38,6 +45,9 @@ class Todo {
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         }
+
+        return fileData;
+
     }
 
     public void addTodo() {
@@ -54,11 +64,11 @@ public class App {
             String action = args[1];
 
             Todo utils = new Todo(username);
-            utils.getTodos();
+            ArrayList<String> todos = utils.getTodos();
+            System.out.println(todos);
 
             if (action == "get") {
                 System.out.println("Returning todos... ");
-                utils.getTodos();
             }
 
         } else {
