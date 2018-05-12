@@ -14,8 +14,14 @@ class Todo {
         this.filename = username;
     }
 
-    private boolean fileExists() {
-        return true;
+    public boolean fileExists() {
+        try {
+            FileReader file = new FileReader(this.filename);
+            BufferedReader bufferRead = new BufferedReader(file);
+            return true;
+        } catch (FileNotFoundException e) {
+            return false; 
+        }
     }
 
     public ArrayList<String> getTodos() {
@@ -64,7 +70,11 @@ public class App {
             String action = args[1];
 
             Todo utils = new Todo(username);
-            ArrayList<String> todos = utils.getTodos();
+            if (utils.fileExists()) {
+                ArrayList<String> todos = utils.getTodos();
+            } else {
+                System.out.println("File doesn't exist.");
+            }
 
             if (action == "get") {
                 System.out.println("Returning todos... ");

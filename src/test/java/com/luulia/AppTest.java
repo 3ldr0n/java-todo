@@ -1,4 +1,4 @@
-package com.todo.app;
+package com.luulia;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
