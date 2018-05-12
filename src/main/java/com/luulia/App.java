@@ -1,4 +1,4 @@
-package com.todo.app;
+package com.luulia;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -65,7 +65,6 @@ public class App {
 
             Todo utils = new Todo(username);
             ArrayList<String> todos = utils.getTodos();
-            System.out.println(todos);
 
             if (action == "get") {
                 System.out.println("Returning todos... ");
