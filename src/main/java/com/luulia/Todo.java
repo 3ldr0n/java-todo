@@ -16,11 +16,18 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 class Todo {
-    private Integer numberOfTodos;
     private String filename;
 
-    public Todo(String username) {
-        this.filename = username;
+    public Todo(String filename) {
+        this.filename = filename;
+    }
+
+    public String getFilename() {
+        return this.filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 
     public boolean fileExists() {
@@ -48,7 +55,7 @@ class Todo {
         }
     }
 
-    public ArrayList<String> getTodos() {
+    public ArrayList<String> getTodos(int numberOfTodos) {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
             FileReader file = new FileReader(this.filename);
@@ -59,9 +66,10 @@ class Todo {
             try {
                 // Reads the file until it ends.
                 System.out.println(this.filename + " todos:");
-                while ((currentLine = bufferRead.readLine()) != null) {
+                while ((currentLine = bufferRead.readLine()) != null && numberOfTodos > 0) {
                     fileData.add(currentLine);
                     System.out.println(currentLine);
+                    numberOfTodos--;
                 }
             } catch (IOException e) {
                 System.out.println("Error reading the file.\n" + e);

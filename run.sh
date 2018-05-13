@@ -2,4 +2,4 @@
 
 mvn package
 
-mvn exec:java -D exec.mainClass=com.luulia.App -Dexec.args="$1 $2"
+mvn exec:java -D exec.mainClass=com.luulia.App -Dexec.args="$1 $2 $3"
