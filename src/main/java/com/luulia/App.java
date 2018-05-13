@@ -6,9 +6,6 @@ import java.util.ArrayList;
 public class App {
 
     public static int getNumberOfTodos(String[] args) {
-        for (String arg : args) {
-            System.out.println(arg);
-        }
         if (args.length >= 3) {
             String strNumberOfTodos = args[2];
             int numberOfTodos = Integer.parseInt(strNumberOfTodos);
@@ -21,7 +18,9 @@ public class App {
 
     public static void main(String[] args) {
         if (args.length == 1) {
-            System.out.println("Return all the todos.");
+            String filename = args[0];
+            Todo todo = new Todo(filename);
+            ArrayList<String> todos = todo.getTodos(10);
         } else if (args.length >= 2) {
             String filename = args[0];
             String action = args[1];
@@ -31,6 +30,12 @@ public class App {
                 if (action.equals("get")) {
                     int numberOfTodos = getNumberOfTodos(args);
                     ArrayList<String> todos = todo.getTodos(numberOfTodos);
+                } else if (action.equals("add")) {
+                    String todoToAdd = "";
+                    for (int i = 2;i < args.length;i++) {
+                        todoToAdd += " " + args[i];
+                    }
+                    todo.addTodo(todoToAdd);
                 }
             } else {
                 Scanner scan = new Scanner(System.in);

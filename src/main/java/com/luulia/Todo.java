@@ -2,6 +2,7 @@ package com.luulia;
 
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.APPEND;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -88,7 +89,13 @@ class Todo {
 
     }
 
-    public void addTodo() {
-        System.out.println("Adding todos... ");
+    public void addTodo(String todoToAdd) {
+        todoToAdd = todoToAdd.trim();
+        try {
+            Path path = Paths.get("./" + this.filename);
+            Files.write(path, todoToAdd.getBytes(), APPEND);
+        } catch (IOException e) {
+            System.out.println("Error opening the file.\n" + e);
+        }
     }
 }
