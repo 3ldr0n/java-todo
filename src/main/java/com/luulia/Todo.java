@@ -41,6 +41,15 @@ class Todo {
         }
     }
 
+    private String createTodoId() {
+        ArrayList<String> data = getTodos(99);
+        String lastLine = data.get(data.size() - 1);
+        String[] lastLineSplitted = lastLine.split("\\s+");
+        int lastId = Integer.parseInt(lastLineSplitted[0]);
+        int newId = lastId + 1;
+        return "0" + Integer.toString(newId);
+    }
+
     public void createFile() {
         String str = " ";
         byte data[] = str.getBytes();
@@ -66,10 +75,8 @@ class Todo {
 
             try {
                 // Reads the file until it ends.
-                System.out.println(this.filename + " todos:");
                 while ((currentLine = bufferRead.readLine()) != null && numberOfTodos > 0) {
                     fileData.add(currentLine);
-                    System.out.println(currentLine);
                     numberOfTodos--;
                 }
             } catch (IOException e) {
@@ -89,11 +96,21 @@ class Todo {
 
     }
 
+    public void printTodos(ArrayList<String> todos) {
+        System.out.println(this.filename + " todos:");
+        for (String todo : todos ) {
+            System.out.println(todo);
+        }
+    }
+
     public void addTodo(String todoToAdd) {
         todoToAdd = todoToAdd.trim();
+        todoToAdd = createTodoId() + " " + todoToAdd + "\n";
+        byte[] data = todoToAdd.getBytes();
+
         try {
             Path path = Paths.get("./" + this.filename);
-            Files.write(path, todoToAdd.getBytes(), APPEND);
+            Files.write(path, data, APPEND);
         } catch (IOException e) {
             System.out.println("Error opening the file.\n" + e);
         }

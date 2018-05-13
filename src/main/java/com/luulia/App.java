@@ -30,6 +30,7 @@ public class App {
                 if (action.equals("get")) {
                     int numberOfTodos = getNumberOfTodos(args);
                     ArrayList<String> todos = todo.getTodos(numberOfTodos);
+                    todo.printTodos(todos);
                 } else if (action.equals("add")) {
                     String todoToAdd = "";
                     for (int i = 2;i < args.length;i++) {
