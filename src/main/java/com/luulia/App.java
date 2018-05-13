@@ -13,7 +13,10 @@ public class App {
 
             Todo todo = new Todo(username);
             if (todo.fileExists()) {
-                ArrayList<String> todos = todo.getTodos();
+                if (action.equals("get")) {
+                    System.out.println("Returning todos... ");
+                    ArrayList<String> todos = todo.getTodos();
+                }
             } else {
                 Scanner scan = new Scanner(System.in);
                 System.out.println("File doesn't exist.\nDo you want o create a new file? [y/n]");
@@ -25,10 +28,6 @@ public class App {
                 } else {
                     System.out.println("Finishing application");
                 }
-            }
-
-            if (action == "get") {
-                System.out.println("Returning todos... ");
             }
 
         } else {
