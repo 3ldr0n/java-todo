@@ -3,10 +3,13 @@ package com.luulia;
 import static java.nio.file.StandardOpenOption.CREATE;
 import static java.nio.file.StandardOpenOption.APPEND;
 
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.BufferedOutputStream;
 import java.io.FileNotFoundException;
 
@@ -14,9 +17,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import java.util.Scanner;
 import java.util.ArrayList;
 
+/**
+ * All methods that control the todos file of a certain "user". Each file represents
+ * a "user".
+ */
 class Todo {
+
+    /**
+     * 
+     */
     private String filename;
 
     public Todo(String filename) {
@@ -50,7 +62,8 @@ class Todo {
         return "0" + Integer.toString(newId);
     }
 
-    public void createFile() {
+    public void createFile()
+        throws  IOException {
         String str = " ";
         byte data[] = str.getBytes();
         Path path = Paths.get("./" + this.filename);
@@ -65,7 +78,15 @@ class Todo {
         }
     }
 
-    public ArrayList<String> getTodos(int numberOfTodos) {
+    /**
+     * Gets a certain numbers of todos.
+     *
+     * @param numberOfTodos maximum number of todos to be returned.
+     * @return an ArrayList of Strings containing each line of the file.
+     * @throws IOException
+     */
+    public ArrayList<String> getTodos(int numberOfTodos)
+        throws IOException {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
             FileReader file = new FileReader(this.filename);
@@ -96,6 +117,11 @@ class Todo {
 
     }
 
+    /**
+     * Prints all the todos inside an ArrayList.
+     *
+     * @param todos ArrayList of strings with the todos.
+     */
     public void printTodos(ArrayList<String> todos) {
         System.out.println(this.filename + " todos:");
         for (String todo : todos ) {
@@ -103,16 +129,65 @@ class Todo {
         }
     }
 
-    public void addTodo(String todoToAdd) {
+    public void addTodo(String todoToAdd)
+        throws IOException {
         todoToAdd = todoToAdd.trim();
+        // Adds the id in front of the todo, and add a line break in the end.
         todoToAdd = createTodoId() + " " + todoToAdd + "\n";
         byte[] data = todoToAdd.getBytes();
 
         try {
             Path path = Paths.get("./" + this.filename);
             Files.write(path, data, APPEND);
+            System.out.println("Todo added.");
+            ArrayList<String> todos = getTodos(10);
+            printTodos(todos);
         } catch (IOException e) {
             System.out.println("Error opening the file.\n" + e);
         }
+    }
+
+    /**
+     * Creates a temporary file to put the the data without the deleted todo.
+     *
+     * @param todoId a String that represents the todo id on the file.
+     * @return true if the file was correctly renamed.
+     * @throws IOException
+     */
+    public boolean deleteTodo(String todoId)
+        throws IOException {
+        File file = new File(this.filename);
+        String tempFilename = "temp_" + this.filename;
+        File temporaryFile = new File(tempFilename);
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found.");
+            return false;
+        }
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile));
+        } catch (IOException e) {
+            System.out.println("File not found.");
+            return false;
+        }
+
+        String currentLine;
+
+        // Searches in each line of the file to the given id.
+        while ((currentLine = reader.readLine()) != null) {
+            String idLine = currentLine.trim();
+            if (idLine.equals(todoId)) {
+                continue;
+            }
+            writer.write(currentLine + "\n");
+        }
+
+        writer.close();
+        reader.close();
+        boolean success = temporaryFile.renameTo(file);
+        return success;
     }
 }
