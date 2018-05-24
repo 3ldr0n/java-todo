@@ -163,14 +163,14 @@ class Todo {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
         } catch (FileNotFoundException e) {
-            System.out.println("File not found.");
+            System.out.println("Error while trying to open the file for reading.\n" + e);
             return false;
         }
 
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile));
         } catch (IOException e) {
-            System.out.println("File not found.");
+            System.out.println("Error while trying to open the file for writing.\n" + e);
             return false;
         }
 
