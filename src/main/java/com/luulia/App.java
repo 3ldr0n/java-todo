@@ -6,6 +6,12 @@ import java.util.ArrayList;
 
 public class App {
 
+    /**
+     * Get the number if todos to be displayed.
+     *
+     * @param args CLI arguments.
+     * @return number of todos that will be displayed.
+     */
     public static int getNumberOfTodos(String[] args) {
         if (args.length >= 3) {
             String strNumberOfTodos = args[2];
@@ -17,6 +23,12 @@ public class App {
         }
     }
 
+    /**
+     * Prints a certain number of todos.
+     *
+     * @param args CLI arguments
+     * @param todo Todo object to retrieve the todos.
+     */
     public static void getTodos(String[] args, Todo todo) {
         int numberOfTodos = getNumberOfTodos(args);
         try {
@@ -28,6 +40,12 @@ public class App {
 
     }
 
+    /**
+     * Adds a todo in the file.
+     *
+     * @param args CLI arguments.
+     * @param todo Todo object used to add the given cli todo.
+     */
     public static void addTodo(String[] args, Todo todo) {
         String todoToAdd = "";
         for (int i = 2;i < args.length;i++) {
