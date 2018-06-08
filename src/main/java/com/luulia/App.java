@@ -97,6 +97,7 @@ public class App {
                 } else {
                     System.out.println("Finishing application");
                 }
+                scan.close();
             }
 
         } else {

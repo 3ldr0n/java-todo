@@ -46,20 +46,30 @@ class Todo {
     public boolean fileExists() {
         try {
             FileReader file = new FileReader(this.filename);
-            BufferedReader bufferRead = new BufferedReader(file);
-            return true;
+            try {
+                BufferedReader bufferRead = new BufferedReader(file);
+                bufferRead.close();
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
         } catch (FileNotFoundException e) {
             return false; 
         }
     }
 
     private String createTodoId() {
-        ArrayList<String> data = getTodos(99);
-        String lastLine = data.get(data.size() - 1);
-        String[] lastLineSplitted = lastLine.split("\\s+");
-        int lastId = Integer.parseInt(lastLineSplitted[0]);
-        int newId = lastId + 1;
-        return "0" + Integer.toString(newId);
+        try {
+            ArrayList<String> data = getTodos(99);
+            String lastLine = data.get(data.size() - 1);
+            String[] lastLineSplitted = lastLine.split("\\s+");
+            int lastId = Integer.parseInt(lastLineSplitted[0]);
+            int newId = lastId + 1;
+            return "0" + Integer.toString(newId);
+        } catch (IOException e) {
+            System.out.println(e);
+            return "";
+        }
     }
 
     public void createFile()
@@ -162,32 +172,26 @@ class Todo {
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile));
+
+            String currentLine;
+
+            // Searches in each line of the file to the given id.
+            while ((currentLine = reader.readLine()) != null) {
+                String idLine = currentLine.trim();
+                if (idLine.equals(todoId)) {
+                    continue;
+                }
+                writer.write(currentLine + "\n");
+            }
+
+            writer.close();
+            reader.close();
+            boolean success = temporaryFile.renameTo(file);
+            return success;
         } catch (FileNotFoundException e) {
             System.out.println("Error while trying to open the file for reading.\n" + e);
             return false;
         }
-
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile));
-        } catch (IOException e) {
-            System.out.println("Error while trying to open the file for writing.\n" + e);
-            return false;
-        }
-
-        String currentLine;
-
-        // Searches in each line of the file to the given id.
-        while ((currentLine = reader.readLine()) != null) {
-            String idLine = currentLine.trim();
-            if (idLine.equals(todoId)) {
-                continue;
-            }
-            writer.write(currentLine + "\n");
-        }
-
-        writer.close();
-        reader.close();
-        boolean success = temporaryFile.renameTo(file);
-        return success;
     }
 }
