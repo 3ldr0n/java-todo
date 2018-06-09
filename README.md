@@ -1,2 +1,2 @@
 # Luulia
-CLI todo made with java
+CLI todo app made with java
