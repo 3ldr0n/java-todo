@@ -179,7 +179,7 @@ class Todo {
             // Searches in each line of the file to the given id.
             while ((currentLine = reader.readLine()) != null) {
                 String idLine = currentLine.trim();
-                if (idLine.equals(todoId)) {
+                if (idLine.startsWith(todoId)) {
                     continue;
                 }
                 writer.write(currentLine + "\n");

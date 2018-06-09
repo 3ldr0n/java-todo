@@ -80,7 +80,11 @@ public class App {
                     addTodo(args, todo);
                 } else if (action.equals("delete")) {
                     String todoId = args[2];
-                    System.out.println(todoId);
+                    try {
+                        todo.deleteTodo(todoId);
+                    } catch (IOException e) {
+                        System.out.println(e);
+                    }
                 }
             } else {
                 Scanner scan = new Scanner(System.in);
