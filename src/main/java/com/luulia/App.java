@@ -54,6 +54,23 @@ public class App {
 
         try {
             todo.addTodo(todoToAdd);
+            System.out.println("Todo added.");
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
+     * Deletes the todo given the id.
+     *
+     * @param args CLI arguments.
+     * @param todo Todo object used to delete the given todo.
+     */
+    public static void deleteTodo(String[] args, Todo todo) {
+        String todoId = args[2];
+        try {
+            todo.deleteTodo(todoId);
+            System.out.println("Todo deleted.");
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -79,12 +96,7 @@ public class App {
                 } else if (action.equals("add")) {
                     addTodo(args, todo);
                 } else if (action.equals("delete")) {
-                    String todoId = args[2];
-                    try {
-                        todo.deleteTodo(todoId);
-                    } catch (IOException e) {
-                        System.out.println(e);
-                    }
+                    deleteTodo(args, todo);
                 }
             } else {
                 Scanner scan = new Scanner(System.in);

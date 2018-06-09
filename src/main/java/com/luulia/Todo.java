@@ -43,6 +43,11 @@ class Todo {
         this.filename = filename;
     }
 
+    /**
+     * Checks if the file exists.
+     *
+     * @return true if the file exists, and false if it doesn't.
+     */
     public boolean fileExists() {
         try {
             FileReader file = new FileReader(this.filename);
@@ -58,6 +63,11 @@ class Todo {
         }
     }
 
+    /**
+     * Creates an id for a todo.
+     *
+     * @return A string which is the number of the last todo id on the file plus one.
+     */
     private String createTodoId() {
         try {
             ArrayList<String> data = getTodos(99);
@@ -65,6 +75,10 @@ class Todo {
             String[] lastLineSplitted = lastLine.split("\\s+");
             int lastId = Integer.parseInt(lastLineSplitted[0]);
             int newId = lastId + 1;
+
+            if (newId > 9) {
+                return Integer.toString(newId);
+            }
             return "0" + Integer.toString(newId);
         } catch (IOException e) {
             System.out.println(e);
@@ -72,6 +86,9 @@ class Todo {
         }
     }
 
+    /**
+     * Creates a file to store the todos.
+     */
     public void createFile()
         throws  IOException {
         String str = " ";
@@ -139,6 +156,11 @@ class Todo {
         }
     }
 
+    /**
+     * Adds the todo, and its id to a file.
+     *
+     * @param todoToAdd The todo that the user will add.
+     */
     public void addTodo(String todoToAdd)
         throws IOException {
         todoToAdd = todoToAdd.trim();
