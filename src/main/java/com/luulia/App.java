@@ -76,6 +76,50 @@ public class App {
         }
     }
 
+    /**
+     * Updates the todo given the id and the todo.
+     *
+     * @param args CLI arguments.
+     * @param todo Todo object used to update the given todo.
+     */
+    public static void updateTodo(String[] args, Todo todo) {
+        String todoId = args[2];
+        String todoToAdd = "";
+        for (int i = 3;i < args.length;i++) {
+            todoToAdd += " " + args[i];
+        }
+
+        try {
+            todo.updateTodo(todoId, todoToAdd);
+            System.out.println("Todo updated.");
+        } catch (IOException e ) {
+            System.out.println("Error.\n" + e);
+        }
+    }
+
+    /**
+     * Checks if the user wants to create a new file to store the todos.
+     *
+     * @param todo Todo object used to create the file.
+     */
+    public static void fileDoesNotExist(Todo todo) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("File doesn't exist.\nDo you want o create a new file? [y/n]");
+        String option = scan.nextLine();
+
+        if (option.toLowerCase().equals("y")) {
+            System.out.println("Creating file... ");
+            try {
+                todo.createFile();
+            } catch (IOException e) {
+                System.out.println("Error.\n" + e);
+            }
+        } else {
+            System.out.println("Finishing application");
+        }
+        scan.close();
+    }
+
     public static void main(String[] args) {
         if (args.length == 1) {
             String filename = args[0];
@@ -97,23 +141,11 @@ public class App {
                     addTodo(args, todo);
                 } else if (action.equals("delete")) {
                     deleteTodo(args, todo);
+                } else if (action.equals("update")) {
+                    updateTodo(args, todo);
                 }
             } else {
-                Scanner scan = new Scanner(System.in);
-                System.out.println("File doesn't exist.\nDo you want o create a new file? [y/n]");
-                String option = scan.nextLine();
-
-                if (option.toLowerCase().equals("y")) {
-                    System.out.println("Creating file... ");
-                    try {
-                        todo.createFile();
-                    } catch (IOException e) {
-                        System.out.println(e);
-                    }
-                } else {
-                    System.out.println("Finishing application");
-                }
-                scan.close();
+                fileDoesNotExist(todo);
             }
 
         } else {

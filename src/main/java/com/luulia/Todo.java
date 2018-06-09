@@ -68,7 +68,8 @@ class Todo {
      *
      * @return A string which is the number of the last todo id on the file plus one.
      */
-    private String createTodoId() {
+    private String createTodoId()
+        throws IOException {
         try {
             ArrayList<String> data = getTodos(99);
             String lastLine = data.get(data.size() - 1);
@@ -82,7 +83,7 @@ class Todo {
             return "0" + Integer.toString(newId);
         } catch (IOException e) {
             System.out.println(e);
-            return "";
+            throw new IOException();
         }
     }
 
@@ -165,17 +166,21 @@ class Todo {
         throws IOException {
         todoToAdd = todoToAdd.trim();
         // Adds the id in front of the todo, and add a line break in the end.
-        todoToAdd = createTodoId() + " " + todoToAdd + "\n";
-        byte[] data = todoToAdd.getBytes();
-
         try {
-            Path path = Paths.get("./" + this.filename);
-            Files.write(path, data, APPEND);
-            System.out.println("Todo added.");
-            ArrayList<String> todos = getTodos(10);
-            printTodos(todos);
+            todoToAdd = createTodoId() + " " + todoToAdd + "\n";
+            byte[] data = todoToAdd.getBytes();
+
+            try {
+                Path path = Paths.get("./" + this.filename);
+                Files.write(path, data, APPEND);
+                System.out.println("Todo added.");
+                ArrayList<String> todos = getTodos(10);
+                printTodos(todos);
+            } catch (IOException e) {
+                System.out.println("Error opening the file.\n" + e);
+            }
         } catch (IOException e) {
-            System.out.println("Error opening the file.\n" + e);
+            System.out.println("Error.\n" + e);
         }
     }
 
@@ -214,6 +219,47 @@ class Todo {
         } catch (FileNotFoundException e) {
             System.out.println("Error while trying to open the file for reading.\n" + e);
             return false;
+        }
+    }
+
+    /**
+     * Updates the todo given its id.
+     *
+     * @return true if the temporary file was renamed correctly.
+     *
+     * @param todoId The todo's id that will be updated.
+     * @param todoToAdd The todo "text" that will replace the old one.
+     * 
+     * @throws IOException
+     */
+    public boolean updateTodo(String todoId, String todoToAdd)
+        throws IOException {
+        File file = new File(this.filename);
+        String tempFilename = "temp_" + this.filename;
+        File temporaryFile = new File(tempFilename);
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(temporaryFile));
+
+            String currentLine;
+
+            // Searches in each line of the file to the given id.
+            while ((currentLine = reader.readLine()) != null) {
+                String idLine = currentLine.trim();
+                if (idLine.startsWith(todoId)) {
+                    currentLine = todoId + todoToAdd;
+                }
+                writer.write(currentLine + "\n");
+            }
+
+            writer.close();
+            reader.close();
+            boolean success = temporaryFile.renameTo(file);
+            return success;
+        } catch (FileNotFoundException e) {
+            System.out.println("Error while trying to open the file for reading.\n" + e);
+            throw new IOException();
         }
     }
 }
