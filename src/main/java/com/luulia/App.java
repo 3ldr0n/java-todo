@@ -26,7 +26,7 @@ public class App {
     /**
      * Prints a certain number of todos.
      *
-     * @param args CLI arguments
+     * @param args CLI arguments.
      * @param todo Todo object to retrieve the todos.
      */
     public static void getTodos(String[] args, Todo todo) {
