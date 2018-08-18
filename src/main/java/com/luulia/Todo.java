@@ -25,9 +25,6 @@ import java.util.ArrayList;
  */
 class Todo {
 
-    /**
-     * 
-     */
     private String filename;
 
     public Todo(String filename) {

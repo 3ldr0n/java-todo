@@ -120,14 +120,31 @@ public class App {
         scan.close();
     }
 
+    /**
+     *
+     *
+     */
+    public static void helpMessage() {
+        System.out.println("Usage: luulia [FILE] [OPTION]");
+        System.out.println("Options:");
+        System.out.println("-g, --get\t ");
+        System.out.println("-a, --add\t a");
+        System.out.println("-d, --delete\t a");
+        System.out.println("-u, --update\t a");
+    }
+
     public static void main(String[] args) {
         if (args.length == 1) {
-            String filename = args[0];
-            Todo todo = new Todo(filename);
-            try {
-                ArrayList<String> todos = todo.getTodos(10);
-            } catch (IOException e) {
-                System.out.println(e);
+            if (args[0].equals("--help") || args[0].equals("-h")) {
+                helpMessage();
+            } else {
+                String filename = args[0];
+                Todo todo = new Todo(filename);
+                try {
+                    ArrayList<String> todos = todo.getTodos(10);
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
             }
         } else if (args.length >= 2) {
             String filename = args[0];
@@ -135,13 +152,13 @@ public class App {
 
             Todo todo = new Todo(filename);
             if (todo.fileExists()) {
-                if (action.equals("get")) {
+                if (action.equals("-g") || action.equals("--get")) {
                     getTodos(args, todo);
-                } else if (action.equals("add")) {
+                } else if (action.equals("-a") || action.equals("--add")) {
                     addTodo(args, todo);
-                } else if (action.equals("delete")) {
+                } else if (action.equals("-d") || action.equals("--delete")) {
                     deleteTodo(args, todo);
-                } else if (action.equals("update")) {
+                } else if (action.equals("-u") || action.equals("--update")) {
                     updateTodo(args, todo);
                 }
             } else {
