@@ -68,6 +68,10 @@ public class App {
      */
     public static void deleteTodo(String[] args, Todo todo) {
         String todoId = args[2];
+        if (Integer.parseInt(todoId) < 10) {
+            todoId = "0" + todoId;
+        }
+
         try {
             todo.deleteTodo(todoId);
             System.out.println("Todo deleted.");
@@ -84,6 +88,10 @@ public class App {
      */
     public static void updateTodo(String[] args, Todo todo) {
         String todoId = args[2];
+        if (Integer.parseInt(todoId) < 10) {
+            todoId = "0" + todoId;
+        }
+
         String todoToAdd = "";
         for (int i = 3;i < args.length;i++) {
             todoToAdd += " " + args[i];
@@ -121,16 +129,15 @@ public class App {
     }
 
     /**
-     *
-     *
+     * Shows the possible options for using the program.
      */
     public static void helpMessage() {
         System.out.println("Usage: luulia [FILE] [OPTION]");
         System.out.println("Options:");
-        System.out.println("-g, --get\t ");
-        System.out.println("-a, --add\t a");
-        System.out.println("-d, --delete\t a");
-        System.out.println("-u, --update\t a");
+        System.out.println("-G, --get\t optional: [NUMBER OF TODOS] default: 10");
+        System.out.println("-A, --add\t [TODO]");
+        System.out.println("-D, --delete\t [TODO NUMBER]");
+        System.out.println("-U, --update\t [TODO NUMBER] [UPDATED TODO]");
     }
 
     public static void main(String[] args) {
@@ -152,14 +159,17 @@ public class App {
 
             Todo todo = new Todo(filename);
             if (todo.fileExists()) {
-                if (action.equals("-g") || action.equals("--get")) {
+                if (action.equals("-G") || action.equals("--get")) {
                     getTodos(args, todo);
-                } else if (action.equals("-a") || action.equals("--add")) {
+                } else if (action.equals("-A") || action.equals("--add")) {
                     addTodo(args, todo);
-                } else if (action.equals("-d") || action.equals("--delete")) {
+                } else if (action.equals("-D") || action.equals("--delete")) {
                     deleteTodo(args, todo);
-                } else if (action.equals("-u") || action.equals("--update")) {
+                } else if (action.equals("-U") || action.equals("--update")) {
                     updateTodo(args, todo);
+                } else {
+                    System.out.println("Invalid argument.");
+                    helpMessage();
                 }
             } else {
                 fileDoesNotExist(todo);
