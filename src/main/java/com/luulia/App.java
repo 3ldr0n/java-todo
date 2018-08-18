@@ -142,7 +142,7 @@ public class App {
 
     public static void main(String[] args) {
         if (args.length == 1) {
-            if (args[0].equals("--help") || args[0].equals("-h")) {
+            if (args[0].equals("--help") || args[0].equals("-H")) {
                 helpMessage();
             } else {
                 String filename = args[0];

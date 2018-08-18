@@ -1,6 +1,8 @@
 # Luulia
 
-CLI todo app made with java
+CLI todo app made with java. Test project used for me to learn more about file manipulation with java.
+
+## Usage
 
 ```console
 Usage: luulia [FILE] [OPTION]
