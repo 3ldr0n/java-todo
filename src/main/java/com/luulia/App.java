@@ -167,6 +167,9 @@ public class App {
                     deleteTodo(args, todo);
                 } else if (action.equals("-U") || action.equals("--update")) {
                     updateTodo(args, todo);
+				} else if (action.equals("-T") || action.equals("--test")) {
+					boolean resp = todo.searchId(6);
+					System.out.println(resp);
                 } else {
                     System.out.println("Invalid argument.");
                     helpMessage();

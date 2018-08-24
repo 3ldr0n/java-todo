@@ -179,6 +179,32 @@ class Todo {
         }
     }
 
+	public boolean searchId(int el) {
+		try {
+			ArrayList<String> todos = this.getTodos(99);
+			int todosId[];
+			int low = 0;
+			int high = todos.size() - 1;
+			int mid;
+
+			while (low <= high) {
+				mid = (high - low) / 2;
+				int midId  = Integer.parseInt(todos.get(mid).split(" ")[0]);
+				if (midId == el) {
+					return true;
+				} else if (midId > el) {
+					high = mid - 1;
+				} else {
+					low = mid + 1;
+				}
+			}
+			return false;
+		} catch (IOException e) {
+			System.out.println("Erro");
+			return false;
+		}
+	}
+
     /**
      * Creates a temporary file to put the the data without the deleted todo.
      *
