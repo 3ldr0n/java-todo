@@ -179,30 +179,18 @@ class Todo {
         }
     }
 
-	public boolean searchId(int el) {
-		try {
-			ArrayList<String> todos = this.getTodos(99);
-			int todosId[];
-			int low = 0;
-			int high = todos.size() - 1;
-			int mid;
-
-			while (low <= high) {
-				mid = (high - low) / 2;
-				int midId  = Integer.parseInt(todos.get(mid).split(" ")[0]);
-				if (midId == el) {
-					return true;
-				} else if (midId > el) {
-					high = mid - 1;
-				} else {
-					low = mid + 1;
-				}
+	public int searchId(ArrayList<Integer> ids, int start, int end, int el) {
+		if (start < end) {
+			int mid = start + (end - start) / 2;
+			if (el < ids.get(mid)) {
+				return this.searchId(ids, start, mid, el);
+			} else if (el > ids.get(mid)) {
+				return this.searchId(ids, mid+1, end, el);
+			} else {
+				return mid;
 			}
-			return false;
-		} catch (IOException e) {
-			System.out.println("Erro");
-			return false;
 		}
+		return -1;
 	}
 
     /**

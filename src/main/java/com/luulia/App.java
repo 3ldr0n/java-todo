@@ -169,8 +169,19 @@ public class App {
                 } else if (action.equals("-U") || action.equals("--update")) {
                     updateTodo(args, todo);
 				} else if (action.equals("-T") || action.equals("--test")) {
-					boolean resp = todo.searchId(6);
-					System.out.println(resp);
+					try {
+						ArrayList<String> todos = todo.getTodos(99);
+						ArrayList<Integer> todosIds = new ArrayList<Integer>();
+						for (int i=0;i<todos.size();i++) {
+							Integer midId  = Integer.parseInt(todos.get(i).split(" ")[0]);
+							todosIds.add(midId);
+						}
+						int el = Integer.parseInt(args[2]);
+						int resp = todo.searchId(todosIds, 0, todosIds.size(), el);
+						System.out.println(resp);
+					} catch (IOException e) {
+						System.out.println(e);
+					}
                 } else {
                     System.out.println("Invalid argument.");
                     usage();
