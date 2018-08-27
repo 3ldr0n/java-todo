@@ -131,24 +131,25 @@ public class App {
     /**
      * Shows the possible options for using the program.
      */
-    public static void helpMessage() {
+    public static void usage() {
         System.out.println("Usage: luulia [FILE] [OPTION]");
-        System.out.println("Options:");
-        System.out.println("-G, --get\t optional: [NUMBER OF TODOS] default: 10");
-        System.out.println("-A, --add\t [TODO]");
-        System.out.println("-D, --delete\t [TODO NUMBER]");
-        System.out.println("-U, --update\t [TODO NUMBER] [UPDATED TODO]");
+        System.out.println("\nOptions:");
+        System.out.println("\t-G, --get\t optional: [NUMBER OF TODOS] default: 10");
+        System.out.println("\t-A, --add\t [TODO]");
+        System.out.println("\t-D, --delete\t [TODO NUMBER]");
+        System.out.println("\t-U, --update\t [TODO NUMBER] [UPDATED TODO]");
     }
 
     public static void main(String[] args) {
         if (args.length == 1) {
             if (args[0].equals("--help") || args[0].equals("-H")) {
-                helpMessage();
+                usage();
             } else {
                 String filename = args[0];
                 Todo todo = new Todo(filename);
                 try {
                     ArrayList<String> todos = todo.getTodos(10);
+					todo.printTodos(todos);
                 } catch (IOException e) {
                     System.out.println(e);
                 }
@@ -172,7 +173,7 @@ public class App {
 					System.out.println(resp);
                 } else {
                     System.out.println("Invalid argument.");
-                    helpMessage();
+                    usage();
                 }
             } else {
                 fileDoesNotExist(todo);
