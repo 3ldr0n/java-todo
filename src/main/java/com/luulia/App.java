@@ -1,4 +1,4 @@
-package com.luulia;
+	package com.luulia;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -134,10 +134,11 @@ public class App {
     public static void usage() {
         System.out.println("Usage: luulia [FILE] [OPTION]");
         System.out.println("\nOptions:");
-        System.out.println("\t-G, --get\t optional: [NUMBER OF TODOS] default: 10");
-        System.out.println("\t-A, --add\t [TODO]");
-        System.out.println("\t-D, --delete\t [TODO NUMBER]");
-        System.out.println("\t-U, --update\t [TODO NUMBER] [UPDATED TODO]");
+        System.out.println(" -G, --get\t optional: [NUMBER OF TODOS] default: 10");
+        System.out.println(" -A, --add\t [TODO]\t Adds a todo");
+        System.out.println(" -D, --delete\t [TODO NUMBER]\t Deletes a todo");
+        System.out.println(" -U, --update\t [TODO NUMBER] [UPDATED TODO]\t Updates the todo");
+        System.out.println(" -H, --help\t This help message");
     }
 
     public static void main(String[] args) {
@@ -191,7 +192,7 @@ public class App {
             }
 
         } else {
-            System.out.println("Not enough information.");
+            usage();
         }
     }
 }

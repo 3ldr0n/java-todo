@@ -105,7 +105,9 @@ class Todo {
      * Gets a certain numbers of todos.
      *
      * @param numberOfTodos maximum number of todos to be returned.
+	 *
      * @return an ArrayList of Strings containing each line of the file.
+	 *
      * @throws IOException
      */
     public ArrayList<String> getTodos(int numberOfTodos)
@@ -179,13 +181,23 @@ class Todo {
         }
     }
 
-	public int searchId(ArrayList<Integer> ids, int start, int end, int el) {
+	/**
+	 * Searches for a given id, in a given list.
+	 *
+	 * @param ids List of todos ids.
+	 * @param start First elment index in the list.
+	 * @param end Last element index in the list.
+	 * @param id Id to be found.
+	 *
+	 * @return Element's index.
+	 */
+	public int searchId(ArrayList<Integer> ids, int start, int end, int id) {
 		if (start < end) {
 			int mid = start + (end - start) / 2;
-			if (el < ids.get(mid)) {
-				return this.searchId(ids, start, mid, el);
-			} else if (el > ids.get(mid)) {
-				return this.searchId(ids, mid+1, end, el);
+			if (id < ids.get(mid)) {
+				return this.searchId(ids, start, mid, id);
+			} else if (id > ids.get(mid)) {
+				return this.searchId(ids, mid+1, end, id);
 			} else {
 				return mid;
 			}
@@ -197,7 +209,9 @@ class Todo {
      * Creates a temporary file to put the the data without the deleted todo.
      *
      * @param todoId a String that represents the todo id on the file.
+	 *
      * @return true if the file was correctly renamed.
+	 *
      * @throws IOException
      */
     public boolean deleteTodo(String todoId)
@@ -232,11 +246,11 @@ class Todo {
 
     /**
      * Updates the todo given its id.
-     *
-     * @return true if the temporary file was renamed correctly.
-     *
+
      * @param todoId The todo's id that will be updated.
      * @param todoToAdd The todo "text" that will replace the old one.
+     *
+     * @return true if the temporary file was renamed correctly.
      * 
      * @throws IOException
      */
