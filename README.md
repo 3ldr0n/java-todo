@@ -4,7 +4,7 @@ CLI todo app made with java. Test project used for me to learn more about file m
 
 ## Usage
 
-```console
+```bash
 Usage: luulia [FILE] [OPTION]
 
 Options:
