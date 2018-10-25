@@ -134,16 +134,16 @@ public class App {
     public static void usage() {
         System.out.println("Usage: luulia [FILE] [OPTION]");
         System.out.println("\nOptions:");
-        System.out.println(" -G, --get\t optional: [NUMBER OF TODOS] default: 10");
-        System.out.println(" -A, --add\t [TODO]\t Adds a todo");
-        System.out.println(" -D, --delete\t [TODO NUMBER]\t Deletes a todo");
-        System.out.println(" -U, --update\t [TODO NUMBER] [UPDATED TODO]\t Updates the todo");
-        System.out.println(" -H, --help\t This help message");
+        System.out.println(" -g, --get\t optional: [NUMBER OF TODOS] default: 10");
+        System.out.println(" -a, --add\t [TODO]\t Adds a todo");
+        System.out.println(" -d, --delete\t [TODO NUMBER]\t Deletes a todo");
+        System.out.println(" -u, --update\t [TODO NUMBER] [UPDATED TODO]\t Updates the todo");
+        System.out.println(" -h, --help\t This help message");
     }
 
     public static void main(String[] args) {
         if (args.length == 1) {
-            if (args[0].equals("--help") || args[0].equals("-H")) {
+            if (args[0].equals("--help") || args[0].equals("-h")) {
                 usage();
             } else {
                 String filename = args[0];
@@ -161,15 +161,15 @@ public class App {
 
             Todo todo = new Todo(filename);
             if (todo.fileExists()) {
-                if (action.equals("-G") || action.equals("--get")) {
+                if (action.equals("-g") || action.equals("--get")) {
                     getTodos(args, todo);
-                } else if (action.equals("-A") || action.equals("--add")) {
+                } else if (action.equals("-a") || action.equals("--add")) {
                     addTodo(args, todo);
-                } else if (action.equals("-D") || action.equals("--delete")) {
+                } else if (action.equals("-d") || action.equals("--delete")) {
                     deleteTodo(args, todo);
-                } else if (action.equals("-U") || action.equals("--update")) {
+                } else if (action.equals("-u") || action.equals("--update")) {
                     updateTodo(args, todo);
-				} else if (action.equals("-T") || action.equals("--test")) {
+				} else if (action.equals("-t") || action.equals("--test")) {
 					try {
 						ArrayList<String> todos = todo.getTodos(99);
 						ArrayList<Integer> todosIds = new ArrayList<Integer>();
