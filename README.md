@@ -1,6 +1,7 @@
 # Luulia
 
-CLI todo app made with java. Test project used for me to learn more about file manipulation with java.
+CLI todo app made with java.
+Stores the todo file at ~/.local/share/luulia/username. The name is defined by the logged suser.
 
 ## Usage
 

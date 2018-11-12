@@ -20,24 +20,37 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
- * All methods that control the todos file of a certain "user". Each file represents
- * a "user".
+ * Controle the todo file of a certain user. Each user in the machine has file
+ * if he ran the program at least once. The file is located at
+ * ~/.local/share/luulia/username
  */
 class Todo {
 
     private String filename;
+	private Path userPath;
+	private String filePath;
 
-    public Todo(String filename) {
-        this.filename = filename;
+    public Todo() {
+        setFilename(System.getProperty("user.name"));
+		setUserPath(Paths.get(System.getProperty("user.home"), ".local/share/luulia/"));
+		this.filePath = this.userPath.toString() + "/" + this.filename;
     }
 
     public String getFilename() {
         return this.filename;
     }
 
+	public Path getUserPath() {
+		return this.userPath;
+	}
+
     public void setFilename(String filename) {
         this.filename = filename;
     }
+
+	public void setUserPath(Path userPath) {
+		this.userPath = userPath;
+	}
 
     /**
      * Checks if the file exists.
@@ -45,18 +58,7 @@ class Todo {
      * @return true if the file exists, and false if it doesn't.
      */
     public boolean fileExists() {
-        try {
-            FileReader file = new FileReader(this.filename);
-            try {
-                BufferedReader bufferRead = new BufferedReader(file);
-                bufferRead.close();
-                return true;
-            } catch (IOException e) {
-                return false;
-            }
-        } catch (FileNotFoundException e) {
-            return false; 
-        }
+		return Files.exists(Paths.get(this.filePath));
     }
 
     /**
@@ -68,7 +70,10 @@ class Todo {
         throws IOException {
         try {
             ArrayList<String> data = getTodos(99);
-            String lastLine = data.get(data.size() - 1);
+			if (data.size() == 0) {
+				return "00";
+			}
+			String lastLine = data.get(data.size() - 1);
             String[] lastLineSplitted = lastLine.split("\\s+");
             int lastId = Integer.parseInt(lastLineSplitted[0]);
             int newId = lastId + 1;
@@ -82,20 +87,29 @@ class Todo {
         }
     }
 
+	private boolean checkUserPath() {
+		if (Files.notExists(this.userPath)) {
+			File dir = new File(this.userPath.toString());
+			return dir.mkdirs();
+		}
+		return false;
+	}
+
     /**
      * Creates a file to store the todos.
      */
     public void createFile()
         throws  IOException {
+		checkUserPath();
+
         String str = " ";
         byte data[] = str.getBytes();
-        Path path = Paths.get("./" + this.filename);
+        Path path = Paths.get(this.userPath.toString(), this.filename);
 
         try {
             OutputStream file = new BufferedOutputStream(
                         Files.newOutputStream(path, CREATE, APPEND));
             file.write(data, 0, data.length);
-            System.out.print("File created.");
         } catch (IOException e) {
             throw new IOException("An error occoured.\n");
         }
@@ -114,7 +128,7 @@ class Todo {
         throws IOException {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
-            FileReader file = new FileReader(this.filename);
+            FileReader file = new FileReader(this.filePath);
             BufferedReader bufferRead = new BufferedReader(file);
 
             String currentLine;
@@ -148,7 +162,6 @@ class Todo {
      * @param todos ArrayList of strings with the todos.
      */
     public void printTodos(ArrayList<String> todos) {
-        System.out.println(this.filename + " todos:");
         for (String todo : todos ) {
             System.out.println(todo);
         }
@@ -168,9 +181,8 @@ class Todo {
             byte[] data = todoToAdd.getBytes();
 
             try {
-                Path path = Paths.get("./" + this.filename);
+                Path path = Paths.get(this.filePath);
                 Files.write(path, data, APPEND);
-                System.out.println("Todo added.");
                 ArrayList<String> todos = getTodos(10);
                 printTodos(todos);
             } catch (IOException e) {
@@ -180,30 +192,6 @@ class Todo {
             throw new IOException("An error occurred.\n");
         }
     }
-
-	/**
-	 * Searches for a given id, in a given list.
-	 *
-	 * @param ids List of todos ids.
-	 * @param start First elment index in the list.
-	 * @param end Last element index in the list.
-	 * @param id Id to be found.
-	 *
-	 * @return Element's index.
-	 */
-	public int searchId(ArrayList<Integer> ids, int start, int end, int id) {
-		if (start < end) {
-			int mid = start + (end - start) / 2;
-			if (id < ids.get(mid)) {
-				return this.searchId(ids, start, mid, id);
-			} else if (id > ids.get(mid)) {
-				return this.searchId(ids, mid+1, end, id);
-			} else {
-				return mid;
-			}
-		}
-		return -1;
-	}
 
     /**
      * Creates a temporary file to put the the data without the deleted todo.
@@ -216,7 +204,7 @@ class Todo {
      */
     public boolean deleteTodo(String todoId)
         throws IOException {
-        File file = new File(this.filename);
+        File file = new File(this.filePath);
         String tempFilename = "temp_" + this.filename;
         File temporaryFile = new File(tempFilename);
 
@@ -246,7 +234,7 @@ class Todo {
 
     /**
      * Updates the todo given its id.
-
+	 *
      * @param todoId The todo's id that will be updated.
      * @param todoToAdd The todo "text" that will replace the old one.
      *
@@ -256,7 +244,7 @@ class Todo {
      */
     public boolean updateTodo(String todoId, String todoToAdd)
         throws IOException {
-        File file = new File(this.filename);
+        File file = new File(this.filePath);
         String tempFilename = "temp_" + this.filename;
         File temporaryFile = new File(tempFilename);
 

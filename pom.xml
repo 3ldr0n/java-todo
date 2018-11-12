@@ -4,7 +4,7 @@
   <groupId>com.luulia</groupId>
   <artifactId>luulia</artifactId>
   <packaging>jar</packaging>
-  <version>0.1</version>
+  <version>0.2</version>
   <name>todo</name>
   <url>http://maven.apache.org</url>
   <build>
