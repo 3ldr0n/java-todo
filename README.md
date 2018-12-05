@@ -1,7 +1,7 @@
 # Luulia
 
 CLI todo app made with java.
-Stores the todo file at ~/.local/share/luulia/username. The name is defined by the logged suser.
+Stores the todo file at ~/.local/share/luulia/username. The name is defined by the logged user.
 
 ## Usage
 
