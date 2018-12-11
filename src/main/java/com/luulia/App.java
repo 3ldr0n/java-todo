@@ -128,24 +128,24 @@ public class App {
         System.out.println(" -d, --delete\t [TODO NUMBER]\t Deletes a todo");
         System.out.println(" -u, --update\t [TODO NUMBER] [UPDATED TODO]\t Updates the todo");
         System.out.println(" -h, --help\t This help message");
-		System.exit(status);
+        System.exit(status);
     }
 
     public static void main(String[] args) {
-		if (args.length == 0) {
-			usage(-1);
-		}
+        if (args.length == 0) {
+            usage(-1);
+        }
 
         String action = args[0];
 
         if (action.equals("-h") || action.equals("--help")) {
             usage(0);
-		}
+        }
 
         Todo todo = new Todo();
         if (!todo.fileExists()) {
             fileDoesNotExist(todo);
-		}
+        }
 
         if (action.equals("-g") || action.equals("--get")) {
             getTodos(args, todo);
