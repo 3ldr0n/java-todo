@@ -33,15 +33,15 @@ class Todo {
     public Todo() {
         setFilename(System.getProperty("user.name"));
         setUserPath(Paths.get(System.getProperty("user.home"), ".local/share/luulia/"));
-        this.filePath = this.userPath.toString() + "/" + this.filename;
+        filePath = userPath.toString() + "/" + filename;
     }
 
     public String getFilename() {
-        return this.filename;
+        return filename;
     }
 
     public Path getUserPath() {
-        return this.userPath;
+        return userPath;
     }
 
     public void setFilename(String filename) {
@@ -58,7 +58,7 @@ class Todo {
      * @return true if the file exists, and false if it doesn't.
      */
     public boolean fileExists() {
-        return Files.exists(Paths.get(this.filePath));
+        return Files.exists(Paths.get(filePath));
     }
 
     /**
@@ -88,8 +88,8 @@ class Todo {
     }
 
     private boolean checkUserPath() {
-        if (Files.notExists(this.userPath)) {
-            File dir = new File(this.userPath.toString());
+        if (Files.notExists(userPath)) {
+            File dir = new File(userPath.toString());
             return dir.mkdirs();
         }
         return false;
@@ -104,7 +104,7 @@ class Todo {
 
         String str = " ";
         byte data[] = str.getBytes();
-        Path path = Paths.get(this.userPath.toString(), this.filename);
+        Path path = Paths.get(userPath.toString(), filename);
 
         try {
             OutputStream file = new BufferedOutputStream(
@@ -128,13 +128,12 @@ class Todo {
         throws IOException {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
-            FileReader file = new FileReader(this.filePath);
+            FileReader file = new FileReader(filePath);
             BufferedReader bufferRead = new BufferedReader(file);
 
             String currentLine;
 
             try {
-                // Reads the file until it ends.
                 while ((currentLine = bufferRead.readLine()) != null && numberOfTodos > 0) {
                     fileData.add(currentLine);
                     numberOfTodos--;
@@ -181,7 +180,7 @@ class Todo {
             byte[] data = todoToAdd.getBytes();
 
             try {
-                Path path = Paths.get(this.filePath);
+                Path path = Paths.get(filePath);
                 Files.write(path, data, APPEND);
                 ArrayList<String> todos = getTodos(10);
                 printTodos(todos);
@@ -204,8 +203,8 @@ class Todo {
      */
     public boolean deleteTodo(String todoId)
         throws IOException {
-        File file = new File(this.filePath);
-        String tempFilename = "temp_" + this.filename;
+        File file = new File(filePath);
+        String tempFilename = "temp_" + filename;
         File temporaryFile = new File(tempFilename);
 
         try {
@@ -244,8 +243,8 @@ class Todo {
      */
     public boolean updateTodo(String todoId, String todoToAdd)
         throws IOException {
-        File file = new File(this.filePath);
-        String tempFilename = "temp_" + this.filename;
+        File file = new File(filePath);
+        String tempFilename = "temp_" + filename;
         File temporaryFile = new File(tempFilename);
 
         try {
