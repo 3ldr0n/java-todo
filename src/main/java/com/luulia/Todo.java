@@ -65,6 +65,8 @@ class Todo {
      * Creates an id for a todo.
      *
      * @return A string which is the number of the last todo id on the file plus one.
+     *
+     * @throws IOException If it can't read the file.
      */
     private int createTodoId()
         throws IOException {
@@ -98,9 +100,10 @@ class Todo {
 
     /**
      * Creates a file to store the todos.
+     *
+     * @throws IOException If it can't read the file.
      */
-    public void createFile()
-        throws  IOException {
+    public void createFile() throws  IOException {
         checkUserPath();
 
         String str = " ";
@@ -123,10 +126,9 @@ class Todo {
      *
      * @return an ArrayList of Strings containing each line of the file.
      *
-     * @throws IOException If it can't read the file.
+     * @throws FileNotFoundException If it can't read the file.
      */
-    public ArrayList<String> getTodos(int numberOfTodos)
-        throws IOException {
+    public ArrayList<String> getTodos(int numberOfTodos) throws FileNotFoundException {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
             FileReader file = new FileReader(filePath);
@@ -149,7 +151,7 @@ class Todo {
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new IOException("File not found.");
+            throw new FileNotFoundException("File not found.");
         }
 
         return fileData;
@@ -171,9 +173,10 @@ class Todo {
      * Adds the todo to the user file.
      *
      * @param todoToAdd The todo that the user will add.
+     *
+     * @throws IOException If it can't read the file.
      */
-    public void addTodo(String todoToAdd)
-        throws IOException {
+    public void addTodo(String todoToAdd) throws IOException {
         todoToAdd = todoToAdd.trim();
         try {
             todoToAdd = Integer.toString(createTodoId()) + " " + todoToAdd + "\n";
@@ -201,8 +204,7 @@ class Todo {
      *
      * @throws IOException If it can't open the file.
      */
-    public boolean deleteTodo(int todoId)
-        throws IOException {
+    public boolean deleteTodo(int todoId) throws IOException {
         File file = new File(filePath);
         String tempFilename = "temp_" + filename;
         File temporaryFile = new File(tempFilename);
@@ -213,7 +215,6 @@ class Todo {
 
             String currentLine;
 
-            // Searches in each line of the file to the given id.
             while ((currentLine = reader.readLine()) != null) {
                 String idLine = currentLine.trim();
                 if (idLine.startsWith(Integer.toString(todoId))) {
@@ -241,8 +242,7 @@ class Todo {
      * 
      * @throws IOException If it can't open the file.
      */
-    public boolean updateTodo(int todoId, String todoToAdd)
-        throws IOException {
+    public boolean updateTodo(int todoId, String todoToAdd) throws IOException {
         File file = new File(filePath);
         String tempFilename = "temp_" + filename;
         File temporaryFile = new File(tempFilename);
