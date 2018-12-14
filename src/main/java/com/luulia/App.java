@@ -18,7 +18,6 @@ public class App {
             int numberOfTodos = Integer.parseInt(strNumberOfTodos);
             return numberOfTodos;
         } else {
-            // Returns the base number of todos.
             return 10;
         }
     }
@@ -67,10 +66,7 @@ public class App {
      * @param todo Todo object used to delete the given todo.
      */
     public static void deleteTodo(String[] args, Todo todo) {
-        String todoId = args[1];
-        if (Integer.parseInt(todoId) < 10) {
-            todoId = "0" + todoId;
-        }
+        int todoId = Integer.parseInt(args[1]);
 
         try {
             todo.deleteTodo(todoId);
@@ -86,10 +82,7 @@ public class App {
      * @param todo Todo object used to update the given todo.
      */
     public static void updateTodo(String[] args, Todo todo) {
-        String todoId = args[1];
-        if (Integer.parseInt(todoId) < 10) {
-            todoId = "0" + todoId;
-        }
+        int todoId = Integer.parseInt(args[1]);
 
         String todoToAdd = "";
         for (int i = 2;i < args.length;i++) {
