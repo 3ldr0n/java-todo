@@ -123,7 +123,7 @@ class Todo {
      *
      * @return an ArrayList of Strings containing each line of the file.
      *
-     * @throws IOException
+     * @throws IOException If it can't read the file.
      */
     public ArrayList<String> getTodos(int numberOfTodos)
         throws IOException {
@@ -199,7 +199,7 @@ class Todo {
      *
      * @return true if the file was correctly renamed.
      *
-     * @throws IOException
+     * @throws IOException If it can't open the file.
      */
     public boolean deleteTodo(int todoId)
         throws IOException {
@@ -239,7 +239,7 @@ class Todo {
      *
      * @return true if the temporary file was renamed correctly.
      * 
-     * @throws IOException
+     * @throws IOException If it can't open the file.
      */
     public boolean updateTodo(int todoId, String todoToAdd)
         throws IOException {
