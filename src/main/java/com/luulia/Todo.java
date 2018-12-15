@@ -1,8 +1,5 @@
 package com.luulia;
 
-import static java.nio.file.StandardOpenOption.CREATE;
-import static java.nio.file.StandardOpenOption.APPEND;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -16,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 import java.util.ArrayList;
 
@@ -23,6 +21,8 @@ import java.util.ArrayList;
  * Control the todo file of a certain user. Each user in the machine has file
  * if he ran the program at least once. The file is located at
  * ~/.local/share/luulia/
+ *
+ * @author Edison Neto
  */
 class Todo {
 
@@ -106,13 +106,13 @@ class Todo {
     public void createFile() throws  IOException {
         checkUserPath();
 
-        String str = " ";
-        byte data[] = str.getBytes();
+        byte data[] = " ".getBytes();
         Path path = Paths.get(userPath.toString(), filename);
 
         try {
             OutputStream file = new BufferedOutputStream(
-                        Files.newOutputStream(path, CREATE, APPEND));
+                        Files.newOutputStream(path, StandardOpenOption.CREATE,
+                                              StandardOpenOption.APPEND));
             file.write(data, 0, data.length);
             file.close();
         } catch (IOException e) {
@@ -181,7 +181,7 @@ class Todo {
 
             try {
                 Path path = Paths.get(filePath);
-                Files.write(path, data, APPEND);
+                Files.write(path, data, StandardOpenOption.APPEND);
                 ArrayList<String> todos = getTodos(10);
                 printTodos(todos);
             } catch (IOException e) {
