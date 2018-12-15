@@ -47,7 +47,7 @@ public class App {
      */
     public static void addTodo(String[] args, Todo todo) {
         String todoToAdd = "";
-        for (int i = 1;i < args.length;i++) {
+        for (int i = 1; i < args.length; i++) {
             todoToAdd += " " + args[i];
         }
 

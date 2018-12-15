@@ -20,9 +20,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 /**
- * Controle the todo file of a certain user. Each user in the machine has file
+ * Control the todo file of a certain user. Each user in the machine has file
  * if he ran the program at least once. The file is located at
- * ~/.local/share/luulia/username
+ * ~/.local/share/luulia/
  */
 class Todo {
 
@@ -114,6 +114,7 @@ class Todo {
             OutputStream file = new BufferedOutputStream(
                         Files.newOutputStream(path, CREATE, APPEND));
             file.write(data, 0, data.length);
+            file.close();
         } catch (IOException e) {
             throw new IOException("An error occoured.\n" + e);
         }
@@ -131,13 +132,12 @@ class Todo {
     public ArrayList<String> getTodos(int numberOfTodos) throws FileNotFoundException {
         ArrayList<String> fileData = new ArrayList<String>();
         try {
-            FileReader file = new FileReader(filePath);
-            BufferedReader bufferRead = new BufferedReader(file);
+            BufferedReader buffer = new BufferedReader(new FileReader(filePath));
 
             String currentLine;
 
             try {
-                while ((currentLine = bufferRead.readLine()) != null && numberOfTodos > 0) {
+                while ((currentLine = buffer.readLine()) != null && numberOfTodos > 0) {
                     fileData.add(currentLine);
                     numberOfTodos--;
                 }
@@ -145,7 +145,7 @@ class Todo {
                 System.out.println("Error reading the file.\n" + e);
             } finally {
                 try {
-                    file.close();
+                    buffer.close();
                 } catch (IOException e) {
                     System.out.println("Error closing the file.\n" + e);
                 }
@@ -155,7 +155,6 @@ class Todo {
         }
 
         return fileData;
-
     }
 
     /**
