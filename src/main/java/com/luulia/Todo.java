@@ -83,7 +83,7 @@ class Todo {
 
             return newId;
         } catch (IOException e) {
-            throw new IOException("An error occurred while trying to create the file.\n");
+            throw new IOException("An error occurred while trying to create the file.\n" + e);
         }
     }
 
@@ -115,7 +115,7 @@ class Todo {
                         Files.newOutputStream(path, CREATE, APPEND));
             file.write(data, 0, data.length);
         } catch (IOException e) {
-            throw new IOException("An error occoured.\n");
+            throw new IOException("An error occoured.\n" + e);
         }
     }
 
@@ -151,7 +151,7 @@ class Todo {
                 }
             }
         } catch (FileNotFoundException e) {
-            throw new FileNotFoundException("File not found.");
+            throw new FileNotFoundException("File not found." + e);
         }
 
         return fileData;
@@ -191,7 +191,7 @@ class Todo {
                 System.out.println("Error opening the file.\n" + e);
             }
         } catch (IOException e) {
-            throw new IOException("An error occurred.\n");
+            throw new IOException("An error occurred.\n" + e);
         }
     }
 
@@ -228,7 +228,7 @@ class Todo {
             boolean success = temporaryFile.renameTo(file);
             return success;
         } catch (FileNotFoundException e) {
-            throw new IOException("Error while trying to open the file for reading.\n");
+            throw new IOException("Error while trying to open the file for reading.\n" + e);
         }
     }
 
@@ -266,7 +266,7 @@ class Todo {
             boolean success = temporaryFile.renameTo(file);
             return success;
         } catch (FileNotFoundException e) {
-            throw new IOException("Error while trying to open the file for reading.\n");
+            throw new IOException("Error while trying to open the file for reading.\n" + e);
         }
     }
 }
