@@ -14,9 +14,13 @@ public class App {
      */
     public static int getNumberOfTodos(String[] args) {
         if (args.length >= 2) {
-            String strNumberOfTodos = args[1];
-            int numberOfTodos = Integer.parseInt(strNumberOfTodos);
-            return numberOfTodos;
+            try {
+                int numberOfTodos = Integer.parseInt(args[1]);
+                return numberOfTodos;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid number, using default value.");
+                return 10;
+            }
         } else {
             return 10;
         }
@@ -66,13 +70,17 @@ public class App {
      * @param todo Todo object used to delete the given todo.
      */
     public static void deleteTodo(String[] args, Todo todo) {
-        int todoId = Integer.parseInt(args[1]);
-
         try {
+            int todoId = Integer.parseInt(args[1]);
             todo.deleteTodo(todoId);
         } catch (IOException e) {
             System.out.println("Couldn't read the file.\n" + e);
+            return;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid value.");
+            return;
         }
+
     }
 
     /**
@@ -82,19 +90,23 @@ public class App {
      * @param todo Todo object used to update the given todo.
      */
     public static void updateTodo(String[] args, Todo todo) {
-        int todoId = Integer.parseInt(args[1]);
-
-        String todoToAdd = "";
-        for (int i = 2;i < args.length;i++) {
-            todoToAdd += " " + args[i];
-        }
-
         try {
+            int todoId = Integer.parseInt(args[1]);
+            String todoToAdd = "";
+            for (int i = 2;i < args.length;i++) {
+                todoToAdd += " " + args[i];
+            }
+
             todo.updateTodo(todoId, todoToAdd);
             System.out.println("Todo updated.");
         } catch (IOException e ) {
             System.out.println("Couldn't read the file.\n" + e);
+            return;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid value.");
+            return;
         }
+
     }
 
     /**
@@ -150,7 +162,7 @@ public class App {
             updateTodo(args, todo);
         } else {
             System.out.println("Invalid argument.");
-            usage(0);
+            usage(-1);
         }
     }
 }
