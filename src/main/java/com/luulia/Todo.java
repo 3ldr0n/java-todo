@@ -164,9 +164,7 @@ class Todo {
      * @param todos ArrayList of strings with the todos.
      */
     public void printTodos(ArrayList<String> todos) {
-        for (String todo : todos ) {
-            System.out.println(todo);
-        }
+        todos.forEach(System.out::println);
     }
 
     /**
