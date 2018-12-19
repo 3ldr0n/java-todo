@@ -124,6 +124,8 @@ public class App {
 
     /**
      * Shows the possible options for using the program.
+     *
+     * @param status Status code to exit.
      */
     public static void usage(int status) {
         System.out.println("Usage: luulia [FILE] [OPTION]");

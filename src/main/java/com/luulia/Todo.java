@@ -103,7 +103,7 @@ class Todo {
      *
      * @throws IOException If it can't read the file.
      */
-    public void createFile() throws  IOException {
+    public void createFile() throws IOException {
         checkUserPath();
 
         byte data[] = " ".getBytes();
