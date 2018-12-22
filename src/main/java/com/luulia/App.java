@@ -1,4 +1,4 @@
-package com.luulia;
+package org.luulia;
 
 import java.io.IOException;
 
@@ -40,7 +40,6 @@ public class App {
         } catch (IOException e) {
             System.out.println("Couldn't read the file.\n" + e);
         }
-
     }
 
     /**

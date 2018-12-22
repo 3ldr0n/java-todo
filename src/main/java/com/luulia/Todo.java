@@ -1,4 +1,4 @@
-package com.luulia;
+package org.luulia;
 
 import java.io.File;
 import java.io.FileReader;
@@ -68,8 +68,7 @@ class Todo {
      *
      * @throws IOException If it can't read the file.
      */
-    private int createTodoId()
-        throws IOException {
+    private int createTodoId() throws IOException {
         try {
             ArrayList<String> data = getTodos(99);
             if (data.size() == 0) {

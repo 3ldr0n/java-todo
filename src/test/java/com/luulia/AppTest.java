@@ -1,4 +1,4 @@
-package com.luulia;
+package org.luulia;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

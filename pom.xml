@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.luulia</groupId>
+  <groupId>org.luulia</groupId>
   <artifactId>luulia</artifactId>
   <packaging>jar</packaging>
   <version>0.2</version>
@@ -40,7 +40,7 @@
             <manifest>
               <addClasspath>true</addClasspath>
               <classpathPrefix>lib/</classpathPrefix>
-              <mainClass>com.luulia.App</mainClass>
+              <mainClass>org.luulia.App</mainClass>
             </manifest>
           </archive>
         </configuration>
