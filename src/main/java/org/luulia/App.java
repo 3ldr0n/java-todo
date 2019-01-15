@@ -127,7 +127,7 @@ public class App {
      * @param status Status code to exit.
      */
     public static void usage(int status) {
-        System.out.println("Usage: luulia [FILE] [OPTION]");
+        System.out.println("Usage: luulia [OPTION]");
         System.out.println("\nOptions:");
         System.out.println(" -g, --get\t optional: [NUMBER OF TODOS] default: 10");
         System.out.println(" -a, --add\t [TODO]\t Adds a todo");

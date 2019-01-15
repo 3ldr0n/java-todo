@@ -6,7 +6,7 @@ Stores the todo file at ~/.local/share/luulia/username. The name is defined by t
 ## Usage
 
 ```bash
-Usage: luulia [FILE] [OPTION]
+Usage: luulia [OPTION]
 
 Options:
  -g, --get       optional: [NUMBER OF TODOS] default: 10
