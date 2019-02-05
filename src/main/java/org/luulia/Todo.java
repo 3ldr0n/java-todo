@@ -44,11 +44,11 @@ class Todo {
         return userPath;
     }
 
-    public void setFilename(String filename) {
+    private void setFilename(String filename) {
         this.filename = filename;
     }
 
-    public void setUserPath(Path userPath) {
+    private void setUserPath(Path userPath) {
         this.userPath = userPath;
     }
 
@@ -89,12 +89,11 @@ class Todo {
     /**
      * Checks if the user already has a file in his path.
      */
-    private boolean checkUserPath() {
+    private void checkUserPath() {
         if (Files.notExists(userPath)) {
             File dir = new File(userPath.toString());
-            return dir.mkdirs();
+            dir.mkdirs();
         }
-        return false;
     }
 
     /**
@@ -105,7 +104,7 @@ class Todo {
     public void createFile() throws IOException {
         checkUserPath();
 
-        byte data[] = " ".getBytes();
+        byte[] data = " ".getBytes();
         Path path = Paths.get(userPath.toString(), filename);
 
         try {

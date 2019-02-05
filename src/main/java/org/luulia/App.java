@@ -15,8 +15,7 @@ public class App {
     public static int getNumberOfTodos(String[] args) {
         if (args.length >= 2) {
             try {
-                int numberOfTodos = Integer.parseInt(args[1]);
-                return numberOfTodos;
+                return Integer.parseInt(args[1]);
             } catch (NumberFormatException e) {
                 System.out.println("Invalid number, using default value.");
                 return 10;
@@ -153,15 +152,20 @@ public class App {
             fileDoesNotExist(todo);
         }
 
-        if (action.equals("-g") || action.equals("--get")) {
+        switch (action) {
+        case "-g": case "--get":
             getTodos(args, todo);
-        } else if (action.equals("-a") || action.equals("--add")) {
+            break;
+        case "-a": case"--add":
             addTodo(args, todo);
-        } else if (action.equals("-d") || action.equals("--delete")) {
+            break;
+        case "-d": case "--delete":
             deleteTodo(args, todo);
-        } else if (action.equals("-u") || action.equals("--update")) {
+            break;
+        case "-u": case"--update":
             updateTodo(args, todo);
-        } else {
+            break;
+        default:
             System.out.println("Invalid argument.");
             usage(-1);
         }
