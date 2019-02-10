@@ -76,8 +76,8 @@ class Todo {
             }
 
             String lastLine = data.get(data.size() - 1);
-            String[] lastLineSplitted = lastLine.split("\\s+");
-            int lastId = Integer.parseInt(lastLineSplitted[0]);
+            String[] lastLineSplit = lastLine.split("\\s+");
+            int lastId = Integer.parseInt(lastLineSplit[0]);
             int newId = lastId + 1;
 
             return newId;
