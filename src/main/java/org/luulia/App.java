@@ -1,16 +1,17 @@
 package org.luulia;
 
 import java.io.IOException;
-
-import java.util.ArrayList;
+import java.util.List;
 
 public class App {
 
+    public static final String DEFAULT_ERROR_MESSAGE = "Couldn't read the file.\n";
+
     /**
-     * Get the number of todos to be displayed.
+     * Get the number of to dos to be displayed.
      *
      * @param args CLI arguments.
-     * @return number of todos that will be displayed.
+     * @return number of to dos that will be displayed.
      */
     public static int getNumberOfTodos(String[] args) {
         if (args.length >= 2) {
@@ -26,26 +27,27 @@ public class App {
     }
 
     /**
-     * Prints a certain number of todos.
+     * Prints a certain number of to dos.
      *
      * @param args CLI arguments.
-     * @param todo Todo object to retrieve the todos.
+     * @param todo To do object to retrieve the to dos.
      */
     public static void getTodos(String[] args, Todo todo) {
         int numberOfTodos = getNumberOfTodos(args);
         try {
-            ArrayList<String> todos = todo.getTodos(numberOfTodos);
+            List<String> todos = todo.getTodos(numberOfTodos);
             todo.printTodos(todos);
         } catch (IOException e) {
-            System.out.println("Couldn't read the file.\n" + e);
+            System.out.println(DEFAULT_ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
     /**
-     * Adds a todo in the file.
+     * Adds a to do in the file.
      *
      * @param args CLI arguments.
-     * @param todo Todo object used to add the given cli todo.
+     * @param todo To do object used to add the given cli to do.
      */
     public static void addTodo(String[] args, Todo todo) {
         String todoToAdd = "";
@@ -54,38 +56,38 @@ public class App {
         }
 
         try {
+            System.out.println(todoToAdd);
             todo.addTodo(todoToAdd);
             System.out.println("Todo added.");
         } catch (IOException e) {
-            System.out.println("Couldn't read the file.\n" + e);
+            System.out.println(DEFAULT_ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
 
     /**
-     * Deletes the todo given the id.
+     * Deletes the to do given the id.
      *
      * @param args CLI arguments.
-     * @param todo Todo object used to delete the given todo.
+     * @param todo To do object used to delete the given to do.
      */
     public static void deleteTodo(String[] args, Todo todo) {
         try {
             int todoId = Integer.parseInt(args[1]);
             todo.deleteTodo(todoId);
         } catch (IOException e) {
-            System.out.println("Couldn't read the file.\n" + e);
-            return;
+            System.out.println(DEFAULT_ERROR_MESSAGE);
+            e.printStackTrace();
         } catch (NumberFormatException e) {
             System.out.println("Invalid value.");
-            return;
         }
-
     }
 
     /**
-     * Updates the todo given the id and the todo.
+     * Updates the to do given the id and the to do.
      *
      * @param args CLI arguments.
-     * @param todo Todo object used to update the given todo.
+     * @param todo To do object used to update the given to do.
      */
     public static void updateTodo(String[] args, Todo todo) {
         try {
@@ -98,25 +100,24 @@ public class App {
             todo.updateTodo(todoId, todoToAdd);
             System.out.println("Todo updated.");
         } catch (IOException e ) {
-            System.out.println("Couldn't read the file.\n" + e);
-            return;
+            System.out.println(DEFAULT_ERROR_MESSAGE);
+            e.printStackTrace();
         } catch (NumberFormatException e) {
             System.out.println("Invalid value.");
-            return;
         }
-
     }
 
     /**
      * Checks if the user wants to create a new file to store the todos.
      *
-     * @param todo Todo object used to create the file.
+     * @param todo To do object used to create the file.
      */
     public static void fileDoesNotExist(Todo todo) {
        try {
            todo.createFile();
        } catch (IOException e) {
-           System.out.println("Error.\n" + e);
+           System.out.println("Error.\n");
+           e.printStackTrace();
        }
     }
 
