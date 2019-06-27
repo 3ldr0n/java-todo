@@ -1,4 +1,4 @@
-package org.luulia;
+package org.luulia.todo;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @author Edison Neto
  */
-class Todo {
+public class Todo {
 
     private String filename;
     private Path userPath;
