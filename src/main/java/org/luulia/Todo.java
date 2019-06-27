@@ -1,20 +1,18 @@
 package org.luulia;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +27,7 @@ class Todo {
 
     private String filename;
     private Path userPath;
-    private String filePath;
+    private final String filePath;
 
     public Todo() {
         setFilename(System.getProperty("user.name"));
@@ -66,7 +64,6 @@ class Todo {
      * Creates an id for a to do.
      *
      * @return A string which is the number of the last to do id on the file plus one.
-     *
      * @throws IOException If it can't read the file.
      */
     private int createTodoId() throws IOException {
@@ -120,9 +117,7 @@ class Todo {
      * Gets a certain numbers of to dos.
      *
      * @param numberOfTodos maximum number of to dos to be returned.
-     *
      * @return an ArrayList of Strings containing each line of the file.
-     *
      * @throws FileNotFoundException If it can't read the file.
      */
     public List<String> getTodos(int numberOfTodos) throws FileNotFoundException {
@@ -166,7 +161,6 @@ class Todo {
      * Adds the to do to the user file.
      *
      * @param todoToAdd The to do that the user will add.
-     *
      * @throws IOException If it can't read the file.
      */
     public void addTodo(String todoToAdd) throws IOException {
@@ -196,9 +190,7 @@ class Todo {
      * Creates a temporary file to put the the data without the deleted to do.
      *
      * @param todoId a String that represents the todo id on the file.
-     *
      * @return true if the file was correctly renamed.
-     *
      * @throws IOException If it can't open the file.
      */
     public boolean deleteTodo(int todoId) throws IOException {
@@ -230,11 +222,9 @@ class Todo {
     /**
      * Updates the to do given its id.
      *
-     * @param todoId The to do's id that will be updated.
+     * @param todoId    The to do's id that will be updated.
      * @param todoToAdd The to do "text" that will replace the old one.
-     *
      * @return true if the temporary file was renamed correctly.
-     * 
      * @throws IOException If it can't open the file.
      */
     public boolean updateTodo(int todoId, String todoToAdd) throws IOException {
