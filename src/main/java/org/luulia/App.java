@@ -50,14 +50,14 @@ public class App {
      * @param todo To do object used to add the given cli to do.
      */
     public static void addTodo(String[] args, Todo todo) {
-        String todoToAdd = "";
-        for (int i = 1; i < args.length; i++) {
-            todoToAdd += " " + args[i];
+        final var todoToAdd = new StringBuilder();
+        for (var i = 1; i < args.length; i++) {
+            todoToAdd.append(args[i]);
         }
 
         try {
-            System.out.println(todoToAdd);
-            todo.addTodo(todoToAdd);
+            System.out.println(todoToAdd.toString());
+            todo.addTodo(todoToAdd.toString());
             System.out.println("Todo added.");
         } catch (IOException e) {
             System.out.println(DEFAULT_ERROR_MESSAGE);
@@ -93,13 +93,13 @@ public class App {
         try {
             int todoId = Integer.parseInt(args[1]);
             String todoToAdd = "";
-            for (int i = 2;i < args.length;i++) {
+            for (int i = 2; i < args.length; i++) {
                 todoToAdd += " " + args[i];
             }
 
             todo.updateTodo(todoId, todoToAdd);
             System.out.println("Todo updated.");
-        } catch (IOException e ) {
+        } catch (IOException e) {
             System.out.println(DEFAULT_ERROR_MESSAGE);
             e.printStackTrace();
         } catch (NumberFormatException e) {
@@ -113,12 +113,12 @@ public class App {
      * @param todo To do object used to create the file.
      */
     public static void fileDoesNotExist(Todo todo) {
-       try {
-           todo.createFile();
-       } catch (IOException e) {
-           System.out.println("Error.\n");
-           e.printStackTrace();
-       }
+        try {
+            todo.createFile();
+        } catch (IOException e) {
+            System.out.println("Error.\n");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -126,7 +126,7 @@ public class App {
      *
      * @param status Status code to exit.
      */
-    public static void usage(int status) {
+    private static void usage(int status) {
         System.out.println("Usage: luulia [OPTION]");
         System.out.println("\nOptions:");
         System.out.println(" -g, --get\t optional: [NUMBER OF TODOS] default: 10");
@@ -154,21 +154,25 @@ public class App {
         }
 
         switch (action) {
-        case "-g": case "--get":
-            getTodos(args, todo);
-            break;
-        case "-a": case"--add":
-            addTodo(args, todo);
-            break;
-        case "-d": case "--delete":
-            deleteTodo(args, todo);
-            break;
-        case "-u": case"--update":
-            updateTodo(args, todo);
-            break;
-        default:
-            System.out.println("Invalid argument.");
-            usage(-1);
+            case "-g":
+            case "--get":
+                getTodos(args, todo);
+                break;
+            case "-a":
+            case "--add":
+                addTodo(args, todo);
+                break;
+            case "-d":
+            case "--delete":
+                deleteTodo(args, todo);
+                break;
+            case "-u":
+            case "--update":
+                updateTodo(args, todo);
+                break;
+            default:
+                System.out.println("Invalid argument.");
+                usage(-1);
         }
     }
 }
